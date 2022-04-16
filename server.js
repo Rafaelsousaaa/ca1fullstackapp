@@ -39,6 +39,7 @@ app.use(express.static('assets'));
 app.listen(5000, () => {
     console.log('Port 5000')
 })
+
 // ****************************************** CONSUMING GET REQUEST FETCHING ALL BLOGS IN UI******************************************
 
 //get all blog list
@@ -71,6 +72,8 @@ app.get('/blog/list', (req, res) => {
    });
 
 })
+
+
 // ****************************************** CONSUMING UPDATE API DISPLAYING UPDATE PAGE IN EJS******************************************
 
 
@@ -116,24 +119,23 @@ app.get('/update-blog/:blogid', (req, res) => {
     });
 })
 
+// ****************************************** DELETING THE BLOG API******************************************
 
+//delete
+app.delete('/blog/delete/:blogId', (req, res) => {
+    const blogId = req.params.blogId
+    //finding blog by username and deleting the blog
+     Blog.deleteOne({blogId :blogId}).then(data=>{
+        // deleting blog
+        console.log("Blog deleted successfully blog id [ "+ blogId +"]")
+        res.send({success: true, msg: 'Post removed successfully'})
+    }).catch(err=>{
+        return res.status(409).send({error: true, msg: 'blog id does not exist'})
+    }) 
+    
 
-// ****************************************** UPDATING THE BLOG API******************************************
-
-
-//update
-app.put('/blog/update/:blogId', (req, res) => {
-  //get the id from url
-  const blogId = req.params.blogId
-  //get the update data
-  const blogData = req.body
-    Blog.update({blogId:blogId},blogData).then(data=>{
-            res.send(data)
-        }).catch(err=>{
-            return res.status(409).send({error: true, msg: 'blog id not exist'})
-        })
-  
 })
+
 // ****************************************** ADDING NEW BLOG API******************************************
 
 //post add
@@ -178,20 +180,19 @@ app.post('/blog/add', (req, res) => {
 
 })
 
+// ****************************************** UPDATING THE BLOG API******************************************
 
-// ****************************************** DELETING THE BLOG API******************************************
 
-//delete
-app.delete('/blog/delete/:blogId', (req, res) => {
-    const blogId = req.params.blogId
-    //finding blog by username and deleting the blog
-     Blog.deleteOne({blogId :blogId}).then(data=>{
-        // deleting blog
-        console.log("Blog deleted successfully blog id [ "+ blogId +"]")
-        res.send({success: true, msg: 'Post removed successfully'})
-    }).catch(err=>{
-        return res.status(409).send({error: true, msg: 'blog id does not exist'})
-    }) 
-    
-
+//update
+app.put('/blog/update/:blogId', (req, res) => {
+  //get the id from url
+  const blogId = req.params.blogId
+  //get the update data
+  const blogData = req.body
+    Blog.update({blogId:blogId},blogData).then(data=>{
+            res.send(data)
+        }).catch(err=>{
+            return res.status(409).send({error: true, msg: 'blog id not exist'})
+        })
+  
 })
