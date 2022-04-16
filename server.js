@@ -34,9 +34,9 @@ const Blog = db.Blogs;
 //view/assets
 app.set("view engine", "ejs")
 app.use(express.static('assets'));
-
+const PORT = process.env.PORT || 5000;
 //open listener port
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log('Port 5000')
 })
 
