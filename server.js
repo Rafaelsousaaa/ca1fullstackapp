@@ -134,3 +134,46 @@ app.put('/blog/update/:blogId', (req, res) => {
         })
   
 })
+// ****************************************** ADDING NEW BLOG API******************************************
+
+//post add
+app.post('/blog/add', (req, res) => {
+
+    //get data
+
+    const blogData = req.body
+
+    // Finding Out if blog with given BlogId Already Exists
+    Blog.find({blogId: blogData.blogId})
+    .then(allBlogs => {
+        // looking for blog data if already exists
+        const findExist = allBlogs.find( blog => blog.blogId === blogData.blogId )
+        if (findExist) {
+            return res.status(409).send({error: true, msg: 'blogId already exist'})
+        }else{
+            let entry =new Blog(blogData)
+            entry
+            .save(entry)
+            .then(data => {
+                res.redirect('/');
+
+            })
+            .catch(err => {
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred while creating the Entry."
+            });
+            });
+        }
+
+
+    })
+    .catch(err => {
+        res.status(500).send({
+        message:
+            err.message || "Some error occurred while retrieving Entrys."
+        });
+    });
+
+
+})
