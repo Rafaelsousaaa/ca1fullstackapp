@@ -71,3 +71,66 @@ app.get('/blog/list', (req, res) => {
    });
 
 })
+// ****************************************** CONSUMING UPDATE API DISPLAYING UPDATE PAGE IN EJS******************************************
+
+
+//update blog
+app.get('/update-blog/', (req, res) => {
+    axios.get('http://localhost:5000/update-blog/:blogid')
+        .then(function(response) {
+            //console.log(finds)
+            res.render('update_blog', {
+                blogId: req.query.blogId,
+                blog: req.query.blog,
+                description: req.query.description,
+                title: req.query.title
+            })
+
+        })
+        .catch(err => {
+            res.send(err);
+        })
+
+})
+
+// ****************************************** UPDATING THE BLOG API******************************************
+
+app.get('/update-blog/:blogid', (req, res) => {
+    //params
+    const id = req.params.blogid
+
+    //check if it exists    
+    Blog.find({id:id}).then(data => {
+        if(data){
+                res.send(data[0])     
+        }else{ 
+            res.status(404).send({ message : "No Blog With ID ["+ username+"]"})
+            
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+        message:
+            err.message || " Error Occured"
+        });
+    });
+})
+
+
+
+// ****************************************** UPDATING THE BLOG API******************************************
+
+
+//update
+app.put('/blog/update/:blogId', (req, res) => {
+  //get the id from url
+  const blogId = req.params.blogId
+  //get the update data
+  const blogData = req.body
+    Blog.update({blogId:blogId},blogData).then(data=>{
+            res.send(data)
+        }).catch(err=>{
+            return res.status(409).send({error: true, msg: 'blog id not exist'})
+        })
+  
+})
