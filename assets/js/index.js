@@ -10,7 +10,7 @@ $("#update_blog").submit(function(event){
 
 
     var request = {
-        "url" : `http://localhost:5000/blog/update/${data.blogId}`,
+        "url" : `https://blogfullstackapp.herokuapp.com/blog/update/${data.blogId}`,
         "method" : "PUT",
         "data" : data
     }
@@ -27,7 +27,7 @@ if(window.location.pathname == "/"){
         var id= $(this).attr("data-id")
 
         var request = {
-            "url" : `http://localhost:5000/blog/delete/${id}`,
+            "url" : `https://blogfullstackapp.herokuapp.com/blog/delete/${id}`,
             "method" : "DELETE"
         }
 
