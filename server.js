@@ -44,7 +44,7 @@ app.listen(5000, () => {
 
 //get all blog list
 app.get('/', (req, res) => {
-    axios.get('http://localhost:5000/blog/list')
+    axios.get('https://blogfullstackapp.herokuapp.com/blog/list')
         .then(function(response) {
             // return index and passs blogs as argument (list)
             res.render('index', { blogs: response.data });
