@@ -79,7 +79,7 @@ app.get('/blog/list', (req, res) => {
 
 //update blog
 app.get('/update-blog/', (req, res) => {
-    axios.get('http://localhost:5000/update-blog/:blogid')
+    axios.get('https://blogfullstackapp.herokuapp.com/update-blog/:blogid')
         .then(function(response) {
             //console.log(finds)
             res.render('update_blog', {
