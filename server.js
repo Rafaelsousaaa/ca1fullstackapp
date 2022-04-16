@@ -177,3 +177,21 @@ app.post('/blog/add', (req, res) => {
 
 
 })
+
+
+// ****************************************** DELETING THE BLOG API******************************************
+
+//delete
+app.delete('/blog/delete/:blogId', (req, res) => {
+    const blogId = req.params.blogId
+    //finding blog by username and deleting the blog
+     Blog.deleteOne({blogId :blogId}).then(data=>{
+        // deleting blog
+        console.log("Blog deleted successfully blog id [ "+ blogId +"]")
+        res.send({success: true, msg: 'Post removed successfully'})
+    }).catch(err=>{
+        return res.status(409).send({error: true, msg: 'blog id does not exist'})
+    }) 
+    
+
+})
